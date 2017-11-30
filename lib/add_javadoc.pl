@@ -3,6 +3,7 @@
 use warnings;
 use strict;
 use File::Find;
+use List::Util qw[min max];
 
 my $usage = "Usage: $0 [-write] ROOT_PATH...\n";
 
@@ -14,6 +15,12 @@ if($root eq "-write") {
     $writeMode = 1;
     $root = shift or die $usage;
 }
+
+my %defaultComment =
+    (
+       "Context" => "the Android context",
+       "Realm"   => "the realm database instance"
+    );
 
 my $countFile = 0;
 my $countBlock = 0;
@@ -157,17 +164,38 @@ sub analyseFile {
 
                             my @elements = split(/\s*\,\s*/, $listWithoutParenthesis);
 
+                            # Compute biggest parameter name length
+                            my $biggestParameterLength = 0;
+
                             for (@elements) {
                                 my @words = split(/\s+/, $_);
 
-                                my $p = $words[-1];
+                                my $parameterName = $words[-1];
+
+                                $biggestParameterLength = max($biggestParameterLength, length($parameterName));
+                            }
+
+                            $biggestParameterLength++;
+
+                            # Write parameters
+                            for (@elements) {
+                                my @words = split(/\s+/, $_);
+
+                                my $parameterType = $words[-2];
+                                my $parameterName = $words[-1];
 
                                 if($hasParam == 0) {
                                     $hasParam = 1;
                                     print "$indent *\n";
                                 }
 
-                                print "$indent * \@param $p\n";
+                                print "$indent * \@param $parameterName";
+
+                                if ($defaultComment{$parameterType}) {
+                                    print " " x ($biggestParameterLength - length($parameterName)) . $defaultComment{$parameterType};
+                                }
+
+                                print "\n";
                             }
                         }
                     }

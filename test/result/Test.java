@@ -6,8 +6,8 @@ import android.support.annotation.Nullable;
 import java.util.List;
 import java.util.Map;
 
-import butterknife.OnClick;
 import R;
+import butterknife.OnClick;
 import rx.functions.Action1;
 
 // Class used to test script add_javadoc.pl
@@ -335,6 +335,45 @@ public class Test {
 
     }
 
+    // Default param comment
+
+    /**
+     * JBG: Missing documentation
+     *
+     * @param context the Android context
+     * @param realm   the realm database instance
+     */
+    public void twoParam2Anno(Context context,
+                              @Nullable Realm realm) {
+
+    }
+
+    // 1 param with composed type
+
+    /**
+     * JBG: Missing documentation
+     *
+     * @param composedParam
+     * @return Map<Object, Object>
+     */
+    public Map<Object, Object> composedType1(@Nullable Map<Object, Map<Object, Object>> composedParam) {
+        return null;
+    }
+
+    // 1 param with composed type
+
+    /**
+     * JBG: Missing documentation
+     *
+     * @param composedParam1
+     * @param composedParam2
+     * @return List<Object>
+     */
+    public List<Object> composedType2(@Nullable Map<Object, Object> composedParam1,
+                                      @Nullable Map<Object, Map<Object, Object>> composedParam2) {
+        return null;
+    }
+
     // Maxi combo
 
     /**
@@ -369,16 +408,20 @@ public class Test {
     /**
      * JBG: Missing documentation
      *
-     * @param param1
+     * @param param1 the realm database instance
      * @param param2
      * @param param3
+     * @param realm  the realm database instance
+     * @param ctx    the Android context
      * @return Object
      */
     @Nullable
     @OnClick(R.id.test_premium_open_store_2)
-    public static final Object testCombo3(@NonNull String param1,
+    public static final Object testCombo3(@NonNull Realm param1,
                                           Object param2,
-                                          @NonNull Object param3) {
+                                          @NonNull Object param3,
+                                          @Nullable Realm realm,
+                                          @NonNull Context ctx) {
         return null;
     }
 
@@ -633,4 +676,4 @@ public class InterfaceImplementation implements Action1<Void> {
 
     }
 }
-// Done! 55 javadoc block(s) added to 1 file(s)
+// Done! 58 javadoc block(s) added to 1 file(s)

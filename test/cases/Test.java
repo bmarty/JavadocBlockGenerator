@@ -6,8 +6,8 @@ import android.support.annotation.Nullable;
 import java.util.List;
 import java.util.Map;
 
-import butterknife.OnClick;
 import R;
+import butterknife.OnClick;
 import rx.functions.Action1;
 
 // Class used to test script add_javadoc.pl
@@ -204,6 +204,26 @@ public class Test {
 
     }
 
+    // Default param comment
+
+    public void twoParam2Anno(Context context,
+                              @Nullable Realm realm) {
+
+    }
+
+    // 1 param with composed type
+
+    public Map<Object, Object> composedType1(@Nullable Map<Object, Map<Object, Object>> composedParam) {
+        return null;
+    }
+
+    // 1 param with composed type
+
+    public List<Object> composedType2(@Nullable Map<Object, Object> composedParam1,
+                                      @Nullable Map<Object, Map<Object, Object>> composedParam2) {
+        return null;
+    }
+
     // Maxi combo
 
     @Nullable
@@ -223,9 +243,11 @@ public class Test {
 
     @Nullable
     @OnClick(R.id.test_premium_open_store_2)
-    public static final Object testCombo3(@NonNull String param1,
+    public static final Object testCombo3(@NonNull Realm param1,
                                           Object param2,
-                                          @NonNull Object param3) {
+                                          @NonNull Object param3,
+                                          @Nullable Realm realm,
+                                          @NonNull Context ctx) {
         return null;
     }
 
