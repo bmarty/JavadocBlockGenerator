@@ -55,6 +55,13 @@ public class Test {
 
     }
 
+    // static field
+
+    /**
+     * JBG: Missing documentation
+     */
+    public static final String PROD = "prod";
+
     // static
 
     /**
@@ -626,4 +633,4 @@ public class InterfaceImplementation implements Action1<Void> {
 
     }
 }
-// Done! 54 javadoc block(s) added to 1 file(s)
+// Done! 55 javadoc block(s) added to 1 file(s)

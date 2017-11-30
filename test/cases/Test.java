@@ -49,6 +49,10 @@ public class Test {
 
     }
 
+    // static field
+
+    public static final String PROD = "prod";
+
     // static
 
     public static void testPublicStatic() {
