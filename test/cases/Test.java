@@ -14,6 +14,32 @@ import rx.functions.Action1;
 
 public class Test {
 
+    // Constructor
+
+    public Test() {
+
+    }
+
+    // Constructor with parameters
+
+    public Test(String param1, String param2) {
+
+    }
+
+    // Constructor with parameters
+
+    public Test(String param1,
+                String param2,
+                @Nullable param3) {
+
+    }
+
+    // private constructor
+
+    private Test(Object o) {
+
+    }
+
     // private
 
     private void testPrivate() {
@@ -360,6 +386,12 @@ public abstract class AbstractClassGen3<T, U extends Object> {
 // Implementation of generic class
 
 public class ImplementationGen1 extends AbstractClassGen1<Object> {
+
+    public ImplementationGen1(@Nullable Void aVoid,
+                              Realm realm,
+                              Object longParamName) {
+
+    }
 
     @Override
     public Object test() {

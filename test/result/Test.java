@@ -17,6 +17,48 @@ import rx.functions.Action1;
  */
 public class Test {
 
+    // Constructor
+
+    /**
+     * Constructor for class Test
+     */
+    public Test() {
+
+    }
+
+    // Constructor with parameters
+
+    /**
+     * Constructor for class Test
+     *
+     * @param param1
+     * @param param2
+     */
+    public Test(String param1, String param2) {
+
+    }
+
+    // Constructor with parameters
+
+    /**
+     * Constructor for class Test
+     *
+     * @param param1
+     * @param param2
+     * @param param3
+     */
+    public Test(String param1,
+                String param2,
+                @Nullable param3) {
+
+    }
+
+    // private constructor
+
+    private Test(Object o) {
+
+    }
+
     // private
 
     private void testPrivate() {
@@ -610,6 +652,19 @@ public abstract class AbstractClassGen3<T, U extends Object> {
 public class ImplementationGen1 extends AbstractClassGen1<Object> {
 
     /**
+     * Constructor for class ImplementationGen1
+     *
+     * @param aVoid         ignored parameter
+     * @param realm         the realm database instance
+     * @param longParamName
+     */
+    public ImplementationGen1(@Nullable Void aVoid,
+                              Realm realm,
+                              Object longParamName) {
+
+    }
+
+    /**
      * JBG: Missing documentation
      *
      * @return Object
@@ -690,4 +745,4 @@ public class InterfaceImplementation implements Action1<Void> {
 
     }
 }
-// Done! 59 javadoc block(s) added to 1 file(s)
+// Done! 63 javadoc block(s) added to 1 file(s)

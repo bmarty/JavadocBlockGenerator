@@ -218,6 +218,82 @@ sub analyseFile {
             }
 
             $javadocDetected = 0;
+        } elsif ($line =~ /^(\s*)public (\w+)\(/) {
+            # Constructor
+            my $indent = $1;
+            my $name = $2;
+            my $rest = $';
+
+            if($javadocDetected == 0) {
+                $nbOfJavaDocAdded++;
+
+                print "$indent/**\n";
+
+                print "$indent * Constructor for class $name\n";
+
+                my $hasParam = 0;
+
+                # Get all the params
+                my $paramsList = $rest;
+
+                # Use while
+                while($paramsList !~ /\)/) {
+                    my $line2 = <$INPUT>;
+                    chomp($line2);
+
+                    $line .= "\n" . $line2;
+
+                    $paramsList .= $line2 if ($line2);
+                }
+
+                # Extract the params
+                if($paramsList =~ /^([^\)]+)\)/) {
+                    my $listWithoutParenthesis = $1;
+
+                    my @elements = split(/\s*\,\s*/, $listWithoutParenthesis);
+
+                    # Compute biggest parameter name length
+                    my $biggestParameterLength = 0;
+
+                    for (@elements) {
+                        my @words = split(/\s+/, $_);
+
+                        my $parameterName = $words[-1];
+
+                        $biggestParameterLength = max($biggestParameterLength, length($parameterName));
+                    }
+
+                    $biggestParameterLength++;
+
+                    # Write parameters
+                    for (@elements) {
+                        my @words = split(/\s+/, $_);
+
+                        my $parameterName = $words[-1];
+
+                        if($parameterName !~ /[<>]/) {
+                            my $parameterType = $words[-2];
+
+                            if($hasParam == 0) {
+                                $hasParam = 1;
+                                print "$indent *\n";
+                            }
+
+                            print "$indent * \@param $parameterName";
+
+                            if ($parameterType && $defaultComment{$parameterType}) {
+                                print " " x ($biggestParameterLength - length($parameterName)) . $defaultComment{$parameterType};
+                            }
+
+                            print "\n";
+                        }
+                    }
+                }
+
+                print "$indent */\n";
+            }
+
+            $javadocDetected = 0;
         } elsif ($line =~ /^\s*$/) {
             # Empty line
 
