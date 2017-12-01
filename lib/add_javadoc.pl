@@ -107,6 +107,7 @@ sub analyseFile {
                     if($rest && $rest =~ /^<([^>]+)>/) {
                         my $hasParam = 0;
 
+                        # TODO Handle param with ','
                         my @elements = split(/\s*\,\s*/, $1);
 
                         for (@elements) {
@@ -181,21 +182,24 @@ sub analyseFile {
                             for (@elements) {
                                 my @words = split(/\s+/, $_);
 
-                                my $parameterType = $words[-2];
                                 my $parameterName = $words[-1];
 
-                                if($hasParam == 0) {
-                                    $hasParam = 1;
-                                    print "$indent *\n";
+                                if($parameterName !~ /[<>]/) {
+                                    my $parameterType = $words[-2];
+
+                                    if($hasParam == 0) {
+                                        $hasParam = 1;
+                                        print "$indent *\n";
+                                    }
+
+                                    print "$indent * \@param $parameterName";
+
+                                    if ($parameterType && $defaultComment{$parameterType}) {
+                                        print " " x ($biggestParameterLength - length($parameterName)) . $defaultComment{$parameterType};
+                                    }
+
+                                    print "\n";
                                 }
-
-                                print "$indent * \@param $parameterName";
-
-                                if ($defaultComment{$parameterType}) {
-                                    print " " x ($biggestParameterLength - length($parameterName)) . $defaultComment{$parameterType};
-                                }
-
-                                print "\n";
                             }
                         }
                     }
