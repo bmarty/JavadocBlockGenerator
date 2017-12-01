@@ -40,6 +40,17 @@ public class Test {
 
     }
 
+    // Already commented constructor
+
+    /**
+     * Existing documentation
+     *
+     * @param o
+     */
+    public Test(Realm o) {
+
+    }
+
     // private
 
     private void testPrivate() {
