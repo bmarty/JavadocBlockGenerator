@@ -106,7 +106,11 @@ sub analyseFile {
 
                 print "$indent/**\n";
 
-                if ($type eq "class") {
+                if ($type eq "enum") {
+                    # Enums
+                    print "$indent * JBG Documentation for enum $name\n";
+                }
+                elsif ($type eq "class") {
                     # Classes
                     print "$indent * JBG Documentation for class $name\n";
 

@@ -323,6 +323,23 @@ public class DocumentedClass {
 
 }
 
+// Enum
+
+public enum Enum1 {
+    ONE,
+    TWO
+}
+
+// Documented Enum
+
+/**
+ * Documentation
+ */
+public enum Enum2 {
+    ONE,
+    TWO
+}
+
 // Inner class
 
 public class ContainingClass {
@@ -345,6 +362,23 @@ public class ContainingClass {
         public void innerMethodDocumented() {
 
         }
+    }
+
+    // Enum
+
+    public enum Enum1 {
+        ONE,
+        TWO
+    }
+
+    // Documented Enum
+
+    /**
+     * Documentation
+     */
+    public enum Enum2 {
+        ONE,
+        TWO
     }
 }
 

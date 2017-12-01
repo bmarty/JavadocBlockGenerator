@@ -520,6 +520,26 @@ public class DocumentedClass {
 
 }
 
+// Enum
+
+/**
+ * JBG Documentation for enum Enum1
+ */
+public enum Enum1 {
+    ONE,
+    TWO
+}
+
+// Documented Enum
+
+/**
+ * Documentation
+ */
+public enum Enum2 {
+    ONE,
+    TWO
+}
+
 // Inner class
 
 /**
@@ -551,6 +571,26 @@ public class ContainingClass {
         public void innerMethodDocumented() {
 
         }
+    }
+
+    // Enum
+
+    /**
+     * JBG Documentation for enum Enum1
+     */
+    public enum Enum1 {
+        ONE,
+        TWO
+    }
+
+    // Documented Enum
+
+    /**
+     * Documentation
+     */
+    public enum Enum2 {
+        ONE,
+        TWO
     }
 }
 
@@ -756,4 +796,4 @@ public class InterfaceImplementation implements Action1<Void> {
 
     }
 }
-// Done! 63 javadoc block(s) added to 1 file(s)
+// Done! 65 javadoc block(s) added to 1 file(s)
