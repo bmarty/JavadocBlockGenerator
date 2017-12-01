@@ -19,6 +19,7 @@ if($root eq "-write") {
 my %defaultComment =
     (
        "Context" => "the Android context",
+       "Void" => "ignored parameter",
        "Realm"   => "the realm database instance"
     );
 
@@ -89,10 +90,10 @@ sub analyseFile {
             # Annotation detected
             $block .= $line . "\n";
             $skip = 1;
-        } elsif ($line =~ /^(\s*)public (static )?(final )?(abstract )?(\w+(<[^>]*>)?) (\w+)/) {
+        } elsif ($line =~ /^(\s*)public (static )?(final )?(abstract )?(\w+(<[^>]*>)?(\[\])?) (\w+)/) {
             my $indent = $1;
             my $type = $5;
-            my $name = $7;
+            my $name = $8;
             my $rest = $';
 
             if($javadocDetected == 0) {

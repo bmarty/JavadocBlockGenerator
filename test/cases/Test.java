@@ -207,7 +207,8 @@ public class Test {
     // Default param comment
 
     public void twoParam2Anno(Context context,
-                              @Nullable Realm realm) {
+                              @Nullable Realm realm,
+                              Void aVoid) {
 
     }
 
@@ -221,6 +222,12 @@ public class Test {
 
     public List<Object> composedType2(@Nullable Map<Object, Object> composedParam1,
                                       @Nullable Map<Object, Map<Object, Object>> composedParam2) {
+        return null;
+    }
+
+    // Return type with []
+
+    public Object[] newArray(int size) {
         return null;
     }
 

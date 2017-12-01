@@ -342,9 +342,11 @@ public class Test {
      *
      * @param context the Android context
      * @param realm   the realm database instance
+     * @param aVoid   ignored parameter
      */
     public void twoParam2Anno(Context context,
-                              @Nullable Realm realm) {
+                              @Nullable Realm realm,
+                              Void aVoid) {
 
     }
 
@@ -371,6 +373,18 @@ public class Test {
      */
     public List<Object> composedType2(@Nullable Map<Object, Object> composedParam1,
                                       @Nullable Map<Object, Map<Object, Object>> composedParam2) {
+        return null;
+    }
+
+    // Return type with []
+
+    /**
+     * JBG: Missing documentation
+     *
+     * @param size
+     * @return Object[]
+     */
+    public Object[] newArray(int size) {
         return null;
     }
 
@@ -669,11 +683,11 @@ public class InterfaceImplementation implements Action1<Void> {
     /**
      * JBG: Missing documentation
      *
-     * @param aVoid
+     * @param aVoid ignored parameter
      */
     @Override
     public void call(Void aVoid) {
 
     }
 }
-// Done! 58 javadoc block(s) added to 1 file(s)
+// Done! 59 javadoc block(s) added to 1 file(s)
