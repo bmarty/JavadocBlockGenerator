@@ -54,6 +54,33 @@ sub toParam {
     return lcfirst($arg);
 }
 
+sub getPhraseFromName {
+    my $name = shift;
+    my $nameucfirst = ucfirst($name);
+
+    my @parts = $nameucfirst =~ /[A-Z](?:[A-Z]+|[a-z]*)(?=$|[A-Z])/g;
+
+    my $recombined = join("", @parts);
+
+    if(@parts && $#parts > 0 && $nameucfirst eq $recombined) {
+        # Special case for "with"
+        my $verb = $parts[0];
+
+        my $res;
+        if($verb eq "With") {
+            $res = "Configure this object with a"
+        } else {
+            $res = $verb;
+        }
+
+        $res .= " " . lc($parts[$_]) for (1..$#parts);
+
+        return $res;
+    }
+
+    return "JBG: Missing documentation for $name";
+}
+
 sub analyseFile {
     my $file = $_;
 
@@ -150,7 +177,8 @@ sub analyseFile {
                     print "$indent * \@param $param the new value for $1\n";
                     print "$indent */\n";
                 } else {
-                    print "$indent * JBG: Missing documentation\n";
+                    my $phrase = &getPhraseFromName($name);
+                    print "$indent * $phrase\n";
 
                     my $hasParam = 0;
 

@@ -93,7 +93,7 @@ public class Test {
     // public
 
     /**
-     * JBG: Missing documentation
+     * Test public
      */
     public void testPublic() {
 
@@ -111,14 +111,14 @@ public class Test {
     // static field
 
     /**
-     * JBG: Missing documentation
+     * JBG: Missing documentation for PROD
      */
     public static final String PROD = "prod";
 
     // static
 
     /**
-     * JBG: Missing documentation
+     * Test public static
      */
     public static void testPublicStatic() {
 
@@ -127,7 +127,7 @@ public class Test {
     // final
 
     /**
-     * JBG: Missing documentation
+     * Test public final
      */
     public final void testPublicFinal() {
 
@@ -136,7 +136,7 @@ public class Test {
     // static final
 
     /**
-     * JBG: Missing documentation
+     * Test public static final
      */
     public static final void testPublicStaticFinal() {
 
@@ -145,7 +145,7 @@ public class Test {
     // Return void
 
     /**
-     * JBG: Missing documentation
+     * Return void
      */
     public void returnVoid() {
 
@@ -154,7 +154,7 @@ public class Test {
     // Return something
 
     /**
-     * JBG: Missing documentation
+     * Return sth
      *
      * @return Object
      */
@@ -165,7 +165,7 @@ public class Test {
     // Return complex type 1
 
     /**
-     * JBG: Missing documentation
+     * Return list
      *
      * @return List<Object>
      */
@@ -176,7 +176,7 @@ public class Test {
     // Return complex type 2
 
     /**
-     * JBG: Missing documentation
+     * Return map
      *
      * @return Map<Object, Object>
      */
@@ -198,7 +198,7 @@ public class Test {
     // Wrong getter 1 (cause there is param)
 
     /**
-     * JBG: Missing documentation
+     * JBG: Missing documentation for getDataWrong1
      *
      * @param x
      * @return String
@@ -210,7 +210,7 @@ public class Test {
     // Wrong getter 2 (cause return void)
 
     /**
-     * JBG: Missing documentation
+     * JBG: Missing documentation for getDataWrong2
      *
      * @param x
      */
@@ -221,9 +221,9 @@ public class Test {
     // Setter
 
     /**
-     * JBG: Missing documentation
+     * Setter for data
      *
-     * @param data
+     * @param data the new value for data
      */
     public void setData(String data) {
 
@@ -232,7 +232,7 @@ public class Test {
     // Wrong setter 1 (return != void)
 
     /**
-     * JBG: Missing documentation
+     * JBG: Missing documentation for setDataWrong1
      *
      * @param data
      * @return String
@@ -244,7 +244,7 @@ public class Test {
     // Wrong setter 2 (multiple params)
 
     /**
-     * JBG: Missing documentation
+     * Set data
      *
      * @param data
      * @param other
@@ -256,7 +256,7 @@ public class Test {
     // Wrong setter 3 bad name
 
     /**
-     * JBG: Missing documentation
+     * JBG: Missing documentation for set
      *
      * @param data
      */
@@ -267,7 +267,7 @@ public class Test {
     // Annotation
 
     /**
-     * JBG: Missing documentation
+     * Convert str
      *
      * @param str
      * @return String
@@ -280,7 +280,7 @@ public class Test {
     // Multiple annotations
 
     /**
-     * JBG: Missing documentation
+     * JBG: Missing documentation for test
      */
     @Nullable
     @OnClick(R.id.test_premium_open_store_2)
@@ -291,7 +291,7 @@ public class Test {
     // 1 param
 
     /**
-     * JBG: Missing documentation
+     * One param
      *
      * @param param1
      */
@@ -301,32 +301,32 @@ public class Test {
     // 2 param 1 line
 
     /**
-     * JBG: Missing documentation
+     * Two params
      *
      * @param param1
      * @param param2
      */
-    public void twoParam(String param1, Object param2) {
+    public void twoParams(String param1, Object param2) {
 
     }
 
     // 2 params 2 lines
 
     /**
-     * JBG: Missing documentation
+     * JBG: Missing documentation for twoParams2
      *
      * @param param1
      * @param param2
      */
-    public void twoParam2(String param1,
-                          Object param2) {
+    public void twoParams2(String param1,
+                           Object param2) {
 
     }
 
     // 3 params 3 lines
 
     /**
-     * JBG: Missing documentation
+     * Three params
      *
      * @param param1
      * @param param2
@@ -341,7 +341,7 @@ public class Test {
     // 3 params 3 lines void
 
     /**
-     * JBG: Missing documentation
+     * Three params void
      *
      * @param param1
      * @param param2
@@ -355,7 +355,7 @@ public class Test {
     // 1 param annotated
 
     /**
-     * JBG: Missing documentation
+     * One param anno
      *
      * @param param1
      */
@@ -366,24 +366,24 @@ public class Test {
     // 2 param 1 line annotated
 
     /**
-     * JBG: Missing documentation
+     * Two params anno
      *
      * @param param1
      * @param param2
      */
-    public void twoParamAnno(String param1, @Nullable Object param2) {
+    public void twoParamsAnno(String param1, @Nullable Object param2) {
 
     }
 
     // 2 params 2 lines
 
     /**
-     * JBG: Missing documentation
+     * Two params anno
      *
      * @param param1
      * @param param2
      */
-    public void twoParam2Anno(String param1,
+    public void twoParamsAnno(String param1,
                               @Nullable Object param2) {
 
     }
@@ -391,22 +391,22 @@ public class Test {
     // Default param comment
 
     /**
-     * JBG: Missing documentation
+     * Three params anno
      *
      * @param context the Android context
      * @param realm   the realm database instance
      * @param aVoid   ignored parameter
      */
-    public void twoParam2Anno(Context context,
-                              @Nullable Realm realm,
-                              Void aVoid) {
+    public void threeParamsAnno(Context context,
+                                @Nullable Realm realm,
+                                Void aVoid) {
 
     }
 
     // 1 param with composed type
 
     /**
-     * JBG: Missing documentation
+     * JBG: Missing documentation for composedType1
      *
      * @param composedParam
      * @return Map<Object, Object>
@@ -418,7 +418,7 @@ public class Test {
     // 1 param with composed type
 
     /**
-     * JBG: Missing documentation
+     * JBG: Missing documentation for composedType2
      *
      * @param composedParam1
      * @param composedParam2
@@ -432,7 +432,7 @@ public class Test {
     // Return type with []
 
     /**
-     * JBG: Missing documentation
+     * New array
      *
      * @param size
      * @return Object[]
@@ -441,10 +441,42 @@ public class Test {
         return null;
     }
 
+    // Special comments
+
+    /**
+     * Retrieve several data
+     */
+    public void retrieveSeveralData() {
+
+    }
+
+    /**
+     * Compute maximum
+     */
+    public void computeMaximum() {
+
+    }
+
+    /**
+     * JBG: Missing documentation for with
+     */
+    public void with() {
+
+    }
+
+    /**
+     * Configure this object with a context
+     *
+     * @param context the Android context
+     */
+    public void withContext(Context context) {
+
+    }
+
     // Maxi combo
 
     /**
-     * JBG: Missing documentation
+     * JBG: Missing documentation for testCombo1
      *
      * @param param1
      * @param param2
@@ -457,7 +489,7 @@ public class Test {
     }
 
     /**
-     * JBG: Missing documentation
+     * JBG: Missing documentation for testCombo2
      *
      * @param param1
      * @param param2
@@ -473,7 +505,7 @@ public class Test {
     }
 
     /**
-     * JBG: Missing documentation
+     * Test combo
      *
      * @param param1 the realm database instance
      * @param param2
@@ -484,11 +516,11 @@ public class Test {
      */
     @Nullable
     @OnClick(R.id.test_premium_open_store_2)
-    public static final Object testCombo3(@NonNull Realm param1,
-                                          Object param2,
-                                          @NonNull Object param3,
-                                          @Nullable Realm realm,
-                                          @NonNull Context ctx) {
+    public static final Object testCombo(@NonNull Realm param1,
+                                         Object param2,
+                                         @NonNull Object param3,
+                                         @Nullable Realm realm,
+                                         @NonNull Context ctx) {
         return null;
     }
 
@@ -557,7 +589,7 @@ public class ContainingClass {
         // Inner method
 
         /**
-         * JBG: Missing documentation
+         * Inner method
          */
         public void innerMethod() {
 
@@ -604,7 +636,7 @@ public interface MyInterface {
     // API
 
     /**
-     * JBG: Missing documentation
+     * On action
      */
     public void onAction();
 
@@ -626,7 +658,7 @@ public abstract class AbstractClass {
     // Abstract method
 
     /**
-     * JBG: Missing documentation
+     * JBG: Missing documentation for test
      */
     public abstract void test();
 }
@@ -641,7 +673,7 @@ public abstract class AbstractClass {
 public abstract class AbstractClassGen1<T> {
 
     /**
-     * JBG: Missing documentation
+     * JBG: Missing documentation for test
      *
      * @return T
      */
@@ -657,14 +689,14 @@ public abstract class AbstractClassGen1<T> {
 public abstract class AbstractClassGen2<T, U> {
 
     /**
-     * JBG: Missing documentation
+     * Test t
      *
      * @return T
      */
     public abstract T testT();
 
     /**
-     * JBG: Missing documentation
+     * Test u
      *
      * @return U
      */
@@ -680,14 +712,14 @@ public abstract class AbstractClassGen2<T, U> {
 public abstract class AbstractClassGen3<T, U extends Object> {
 
     /**
-     * JBG: Missing documentation
+     * Test t
      *
      * @return T
      */
     public abstract T testT();
 
     /**
-     * JBG: Missing documentation
+     * Test u
      *
      * @param toto
      * @return U
@@ -716,7 +748,7 @@ public class ImplementationGen1 extends AbstractClassGen1<Object> {
     }
 
     /**
-     * JBG: Missing documentation
+     * JBG: Missing documentation for test
      *
      * @return Object
      */
@@ -732,7 +764,7 @@ public class ImplementationGen1 extends AbstractClassGen1<Object> {
 public class ImplementationGen2 extends AbstractClassGen2<Object, String> {
 
     /**
-     * JBG: Missing documentation
+     * Test t
      *
      * @return Object
      */
@@ -742,7 +774,7 @@ public class ImplementationGen2 extends AbstractClassGen2<Object, String> {
     }
 
     /**
-     * JBG: Missing documentation
+     * Test u
      *
      * @return String
      */
@@ -758,7 +790,7 @@ public class ImplementationGen2 extends AbstractClassGen2<Object, String> {
 public class ImplementationGen3 extends AbstractClassGen3<Object, Object> {
 
     /**
-     * JBG: Missing documentation
+     * Test t
      *
      * @return Object
      */
@@ -768,7 +800,7 @@ public class ImplementationGen3 extends AbstractClassGen3<Object, Object> {
     }
 
     /**
-     * JBG: Missing documentation
+     * Test u
      *
      * @param toto
      * @return Object
@@ -787,7 +819,7 @@ public class ImplementationGen3 extends AbstractClassGen3<Object, Object> {
 public class InterfaceImplementation implements Action1<Void> {
 
     /**
-     * JBG: Missing documentation
+     * JBG: Missing documentation for call
      *
      * @param aVoid ignored parameter
      */
@@ -796,4 +828,4 @@ public class InterfaceImplementation implements Action1<Void> {
 
     }
 }
-// Done! 65 javadoc block(s) added to 1 file(s)
+// Done! 69 javadoc block(s) added to 1 file(s)

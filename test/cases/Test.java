@@ -196,14 +196,14 @@ public class Test {
 
     // 2 param 1 line
 
-    public void twoParam(String param1, Object param2) {
+    public void twoParams(String param1, Object param2) {
 
     }
 
     // 2 params 2 lines
 
-    public void twoParam2(String param1,
-                          Object param2) {
+    public void twoParams2(String param1,
+                           Object param2) {
 
     }
 
@@ -230,22 +230,22 @@ public class Test {
 
     // 2 param 1 line annotated
 
-    public void twoParamAnno(String param1, @Nullable Object param2) {
+    public void twoParamsAnno(String param1, @Nullable Object param2) {
 
     }
 
     // 2 params 2 lines
 
-    public void twoParam2Anno(String param1,
+    public void twoParamsAnno(String param1,
                               @Nullable Object param2) {
 
     }
 
     // Default param comment
 
-    public void twoParam2Anno(Context context,
-                              @Nullable Realm realm,
-                              Void aVoid) {
+    public void threeParamsAnno(Context context,
+                                @Nullable Realm realm,
+                                Void aVoid) {
 
     }
 
@@ -268,6 +268,24 @@ public class Test {
         return null;
     }
 
+    // Special comments
+
+    public void retrieveSeveralData() {
+
+    }
+
+    public void computeMaximum() {
+
+    }
+
+    public void with() {
+
+    }
+
+    public void withContext(Context context) {
+
+    }
+
     // Maxi combo
 
     @Nullable
@@ -287,11 +305,11 @@ public class Test {
 
     @Nullable
     @OnClick(R.id.test_premium_open_store_2)
-    public static final Object testCombo3(@NonNull Realm param1,
-                                          Object param2,
-                                          @NonNull Object param3,
-                                          @Nullable Realm realm,
-                                          @NonNull Context ctx) {
+    public static final Object testCombo(@NonNull Realm param1,
+                                         Object param2,
+                                         @NonNull Object param3,
+                                         @Nullable Realm realm,
+                                         @NonNull Context ctx) {
         return null;
     }
 
