@@ -169,13 +169,14 @@ sub analyseFile {
                     print "$indent * Getter for $param\n";
                     print "$indent *\n";
                     print "$indent * \@return value of $param\n";
-                } elsif ($type eq "void" && $name =~ /set(\w+)/ && $rest =~ /\([^,]\)/) {
+                } elsif ($type eq "void" && $name =~ /set(\w+)/ && $rest =~ /^\([^,\)]*\) {$/) {
                     # Setters
+                    # Match again to get the correct $1
+                    $name =~ /set(\w+)/;
                     my $param = &toParam($1);
-                    print "$indent * Setter for $1\n";
+                    print "$indent * Setter for $param\n";
                     print "$indent *\n";
-                    print "$indent * \@param $param the new value for $1\n";
-                    print "$indent */\n";
+                    print "$indent * \@param $param the new value for $param\n";
                 } else {
                     my $phrase = &getPhraseFromName($name);
                     print "$indent * $phrase\n";
