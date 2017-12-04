@@ -247,7 +247,7 @@ sub analyseFile {
                         }
                     }
 
-                    if($type ne "void" && $rest =~ /\(/) {
+                    if($type ne "void" && $rest =~ /^\(/) {
                         if($hasParam == 0) {
                             print "$indent *\n";
                         }

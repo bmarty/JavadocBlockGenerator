@@ -330,6 +330,12 @@ public class Test {
                                           @NonNull Object param3) {
         return null;
     }
+
+    // Initialized member
+
+    public static final Creator<ProcedureSelection> CREATOR = new Creator<ProcedureSelection>() {
+
+    };
 }
 
 // documented class

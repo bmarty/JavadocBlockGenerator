@@ -541,6 +541,15 @@ public class Test {
                                           @NonNull Object param3) {
         return null;
     }
+
+    // Initialized member
+
+    /**
+     * JBG: Missing documentation for CREATOR
+     */
+    public static final Creator<ProcedureSelection> CREATOR = new Creator<ProcedureSelection>() {
+
+    };
 }
 
 // documented class
@@ -828,4 +837,4 @@ public class InterfaceImplementation implements Action1<Void> {
 
     }
 }
-// Done! 69 javadoc block(s) added to 1 file(s)
+// Done! 70 javadoc block(s) added to 1 file(s)
