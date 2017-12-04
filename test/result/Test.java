@@ -13,7 +13,7 @@ import rx.functions.Action1;
 // Class used to test script add_javadoc.pl
 
 /**
- * JBG Documentation for class Test
+ * JBG: Documentation for class Test
  */
 public class Test {
 
@@ -555,7 +555,7 @@ public class DocumentedClass {
 // Enum
 
 /**
- * JBG Documentation for enum Enum1
+ * JBG: Documentation for enum Enum1
  */
 public enum Enum1 {
     ONE,
@@ -575,14 +575,14 @@ public enum Enum2 {
 // Inner class
 
 /**
- * JBG Documentation for class ContainingClass
+ * JBG: Documentation for class ContainingClass
  */
 public class ContainingClass {
 
     // Inner class
 
     /**
-     * JBG Documentation for class InnerClass
+     * JBG: Documentation for class InnerClass
      */
     public class InnerClass {
 
@@ -608,7 +608,7 @@ public class ContainingClass {
     // Enum
 
     /**
-     * JBG Documentation for enum Enum1
+     * JBG: Documentation for enum Enum1
      */
     public enum Enum1 {
         ONE,
@@ -629,7 +629,7 @@ public class ContainingClass {
 // Interface
 
 /**
- * JBG Documentation for interface MyInterface
+ * JBG: Documentation for interface MyInterface
  */
 public interface MyInterface {
 
@@ -651,7 +651,7 @@ public interface MyInterface {
 // Absctract class
 
 /**
- * JBG Documentation for class AbstractClass
+ * JBG: Documentation for class AbstractClass
  */
 public abstract class AbstractClass {
 
@@ -666,7 +666,7 @@ public abstract class AbstractClass {
 // Generic classes
 
 /**
- * JBG Documentation for class AbstractClassGen1
+ * JBG: Documentation for class AbstractClassGen1
  *
  * @param <T>
  */
@@ -681,7 +681,7 @@ public abstract class AbstractClassGen1<T> {
 }
 
 /**
- * JBG Documentation for class AbstractClassGen2
+ * JBG: Documentation for class AbstractClassGen2
  *
  * @param <T>
  * @param <U>
@@ -704,7 +704,7 @@ public abstract class AbstractClassGen2<T, U> {
 }
 
 /**
- * JBG Documentation for class AbstractClassGen3
+ * JBG: Documentation for class AbstractClassGen3
  *
  * @param <T>
  * @param <U>
@@ -730,7 +730,7 @@ public abstract class AbstractClassGen3<T, U extends Object> {
 // Implementation of generic class
 
 /**
- * JBG Documentation for class ImplementationGen1
+ * JBG: Documentation for class ImplementationGen1
  */
 public class ImplementationGen1 extends AbstractClassGen1<Object> {
 
@@ -759,7 +759,7 @@ public class ImplementationGen1 extends AbstractClassGen1<Object> {
 }
 
 /**
- * JBG Documentation for class ImplementationGen2
+ * JBG: Documentation for class ImplementationGen2
  */
 public class ImplementationGen2 extends AbstractClassGen2<Object, String> {
 
@@ -785,7 +785,7 @@ public class ImplementationGen2 extends AbstractClassGen2<Object, String> {
 }
 
 /**
- * JBG Documentation for class ImplementationGen3
+ * JBG: Documentation for class ImplementationGen3
  */
 public class ImplementationGen3 extends AbstractClassGen3<Object, Object> {
 
@@ -814,7 +814,7 @@ public class ImplementationGen3 extends AbstractClassGen3<Object, Object> {
 // Class which implements interface
 
 /**
- * JBG Documentation for class InterfaceImplementation
+ * JBG: Documentation for class InterfaceImplementation
  */
 public class InterfaceImplementation implements Action1<Void> {
 

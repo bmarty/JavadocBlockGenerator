@@ -135,11 +135,11 @@ sub analyseFile {
 
                 if ($type eq "enum") {
                     # Enums
-                    print "$indent * JBG Documentation for enum $name\n";
+                    print "$indent * JBG: Documentation for enum $name\n";
                 }
                 elsif ($type eq "class") {
                     # Classes
-                    print "$indent * JBG Documentation for class $name\n";
+                    print "$indent * JBG: Documentation for class $name\n";
 
                     if($rest && $rest =~ /^<([^>]+)>/) {
                         my $hasParam = 0;
@@ -162,7 +162,7 @@ sub analyseFile {
                     }
                 } elsif ($type eq "interface") {
                     # Interface
-                    print "$indent * JBG Documentation for interface $name\n";
+                    print "$indent * JBG: Documentation for interface $name\n";
                 } elsif ($type ne "void" && $name =~ /get(\w+)/ && $rest eq "() {") {
                     # Getters
                     my $param = &toParam($1);
