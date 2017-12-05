@@ -211,10 +211,8 @@ public class Test {
 
     /**
      * JBG: Missing documentation for getDataWrong2
-     *
-     * @param x
      */
-    public void getDataWrong2(boolean x) {
+    public void getDataWrong2() {
 
     }
 
@@ -250,6 +248,15 @@ public class Test {
      * @param other
      */
     public void setData(String data, String other) {
+
+    }
+
+    // Wrong setter (no param)
+
+    /**
+     * JBG: Missing documentation for setDataWrong2
+     */
+    public void setDataWrong2() {
 
     }
 
@@ -837,4 +844,4 @@ public class InterfaceImplementation implements Action1<Void> {
 
     }
 }
-// Done! 70 javadoc block(s) added to 1 file(s)
+// Done! 71 javadoc block(s) added to 1 file(s)

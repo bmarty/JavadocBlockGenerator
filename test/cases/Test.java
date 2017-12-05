@@ -146,7 +146,7 @@ public class Test {
 
     // Wrong getter 2 (cause return void)
 
-    public void getDataWrong2(boolean x) {
+    public void getDataWrong2() {
 
     }
 
@@ -165,6 +165,12 @@ public class Test {
     // Wrong setter 2 (multiple params)
 
     public void setData(String data, String other) {
+
+    }
+
+    // Wrong setter (no param)
+
+    public void setDataWrong2() {
 
     }
 

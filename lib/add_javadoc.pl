@@ -169,7 +169,7 @@ sub analyseFile {
                     print "$indent * Getter for $param\n";
                     print "$indent *\n";
                     print "$indent * \@return value of $param\n";
-                } elsif ($type eq "void" && $name =~ /set(\w+)/ && $rest =~ /^\([^,\)]*\) {$/) {
+                } elsif ($type eq "void" && $name =~ /set(\w+)/ && $rest =~ /^\([^,\)]+\) {$/) {
                     # Setters
                     # Match again to get the correct $1
                     $name =~ /set(\w+)/;

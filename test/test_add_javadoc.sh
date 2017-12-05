@@ -16,3 +16,5 @@ else
 fi
 
 rm $tmp_file
+
+# TODO try to compile/indent result/Test.java?
