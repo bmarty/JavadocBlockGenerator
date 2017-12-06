@@ -6,5 +6,5 @@ jobs:
      steps:
        - checkout
        - run: |
-           pwd
-           ./test/test_add_javadoc.sh
+           cd test
+           ./test_add_javadoc.sh
