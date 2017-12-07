@@ -342,6 +342,31 @@ public class Test {
     public static final Creator<ProcedureSelection> CREATOR = new Creator<ProcedureSelection>() {
 
     };
+
+    // Inner interface
+
+    public interface MyInnerInterface {
+
+        // API
+
+        void onAction();
+
+        // Documented API
+
+        /**
+         * Documentation
+         */
+        void onActionDocumented();
+
+        // Complexe cases
+
+        @Nullable
+        Object onDoSomething(@NonNull Context one, String two);
+
+        @Nullable
+        Object onDoSomethingElse(@NonNull Object one,
+                                 String two);
+    }
 }
 
 // documented class
@@ -418,14 +443,14 @@ public interface MyInterface {
 
     // API
 
-    public void onAction();
+    void onAction();
 
     // Documented API
 
     /**
      * Documentation
      */
-    public void onActionDocumented();
+    void onActionDocumented();
 }
 
 // Absctract class

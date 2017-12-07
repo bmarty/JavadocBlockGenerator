@@ -557,6 +557,51 @@ public class Test {
     public static final Creator<ProcedureSelection> CREATOR = new Creator<ProcedureSelection>() {
 
     };
+
+    // Inner interface
+
+    /**
+     * JBG: Documentation for interface MyInnerInterface
+     */
+    public interface MyInnerInterface {
+
+        // API
+
+        /**
+         * On action
+         */
+        void onAction();
+
+        // Documented API
+
+        /**
+         * Documentation
+         */
+        void onActionDocumented();
+
+        // Complexe cases
+
+        /**
+         * On do something
+         *
+         * @param one the Android context
+         * @param two
+         * @return Object
+         */
+        @Nullable
+        Object onDoSomething(@NonNull Context one, String two);
+
+        /**
+         * On do something else
+         *
+         * @param one
+         * @param two
+         * @return Object
+         */
+        @Nullable
+        Object onDoSomethingElse(@NonNull Object one,
+                                 String two);
+    }
 }
 
 // documented class
@@ -654,14 +699,14 @@ public interface MyInterface {
     /**
      * On action
      */
-    public void onAction();
+    void onAction();
 
     // Documented API
 
     /**
      * Documentation
      */
-    public void onActionDocumented();
+    void onActionDocumented();
 }
 
 // Absctract class
@@ -844,4 +889,4 @@ public class InterfaceImplementation implements Action1<Void> {
 
     }
 }
-// Done! 71 javadoc block(s) added to 1 file(s)
+// Done! 75 javadoc block(s) added to 1 file(s)

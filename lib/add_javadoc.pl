@@ -103,6 +103,9 @@ sub analyseFile {
     my $javadocDetected = 0;
     my $nbOfJavaDocAdded = 0;
 
+    # When in a interface, the public keyword is not mandatory
+    my $isInInterface = 0;
+
     my @params;
     my $block = "";
     my $skip;
@@ -118,150 +121,15 @@ sub analyseFile {
             # Commented out line
         } elsif ($line =~ m!/\*\*!) {
             $javadocDetected = 1;
-        } elsif($line =~ m!^\s*@!) {
+        } elsif ($line =~ m!^\s*@!) {
             # Annotation detected
             $block .= $line . "\n";
             $skip = 1;
-        } elsif ($line =~ /^(\s*)public (static )?(final )?(abstract )?(\w+(<[^>]*>)?(\[\])?) (\w+)/) {
-            my $indent = $1;
-            my $type = $5;
-            my $name = $8;
-            my $rest = $';
-
-            if($javadocDetected == 0) {
-                $nbOfJavaDocAdded++;
-
-                print "$indent/**\n";
-
-                if ($type eq "enum") {
-                    # Enums
-                    print "$indent * JBG: Documentation for enum $name\n";
-                }
-                elsif ($type eq "class") {
-                    # Classes
-                    print "$indent * JBG: Documentation for class $name\n";
-
-                    if($rest && $rest =~ /^<([^>]+)>/) {
-                        my $hasParam = 0;
-
-                        # TODO Handle param with ','
-                        my @elements = split(/\s*\,\s*/, $1);
-
-                        for (@elements) {
-                            my @words = split(/\s+/, $_);
-
-                            my $p = $words[0];
-
-                            if($hasParam == 0) {
-                                $hasParam = 1;
-                                print "$indent *\n";
-                            }
-
-                            print "$indent * \@param <$p>\n";
-                        }
-                    }
-                } elsif ($type eq "interface") {
-                    # Interface
-                    print "$indent * JBG: Documentation for interface $name\n";
-                } elsif ($type ne "void" && $name =~ /get(\w+)/ && $rest eq "() {") {
-                    # Getters
-                    my $param = &toParam($1);
-                    print "$indent * Getter for $param\n";
-                    print "$indent *\n";
-                    print "$indent * \@return value of $param\n";
-                } elsif ($type eq "void" && $name =~ /set(\w+)/ && $rest =~ /^\([^,\)]+\) {$/) {
-                    # Setters
-                    # Match again to get the correct $1
-                    $name =~ /set(\w+)/;
-                    my $param = &toParam($1);
-                    print "$indent * Setter for $param\n";
-                    print "$indent *\n";
-                    print "$indent * \@param $param the new value for $param\n";
-                } else {
-                    my $phrase = &getPhraseFromName($name);
-                    print "$indent * $phrase\n";
-
-                    my $hasParam = 0;
-
-                    # Get all the params
-                    if($rest && $rest =~ /\(/) {
-                        # Method detected, parse the parameters
-                        my $paramsList = $rest;
-
-                        # Use while
-                        while($paramsList !~ /\)/) {
-                            my $line2 = <$INPUT>;
-                            chomp($line2);
-
-                            $line .= "\n" . $line2;
-
-                            $paramsList .= $line2 if ($line2);
-                        }
-
-                        # Extract the params
-                        if($paramsList =~ /^\(([^\)]+)\)/) {
-                            my $listWithoutParenthesis = $1;
-
-                            my @elements = split(/\s*\,\s*/, $listWithoutParenthesis);
-
-                            # Compute biggest parameter name length
-                            my $biggestParameterLength = 0;
-
-                            for (@elements) {
-                                my @words = split(/\s+/, $_);
-
-                                my $parameterName = $words[-1];
-
-                                $biggestParameterLength = max($biggestParameterLength, length($parameterName));
-                            }
-
-                            $biggestParameterLength++;
-
-                            # Write parameters
-                            for (@elements) {
-                                my @words = split(/\s+/, $_);
-
-                                my $parameterName = $words[-1];
-
-                                if($parameterName !~ /[<>]/) {
-                                    my $parameterType = $words[-2];
-
-                                    if($hasParam == 0) {
-                                        $hasParam = 1;
-                                        print "$indent *\n";
-                                    }
-
-                                    print "$indent * \@param $parameterName";
-
-                                    if ($parameterType) {
-                                        $parameterTypes{$parameterType} = 1;
-                                    }
-
-                                    if ($parameterType && $defaultComment{$parameterType}) {
-                                        print " " x ($biggestParameterLength - length($parameterName)) . $defaultComment{$parameterType};
-                                    }
-
-                                    print "\n";
-                                }
-                            }
-                        }
-                    }
-
-                    if($type ne "void" && $rest =~ /^\(/) {
-                        if($hasParam == 0) {
-                            print "$indent *\n";
-                        }
-
-                        print "$indent * \@return $type\n";
-                    }
-                }
-
-                print "$indent */\n";
-            }
-
-            $javadocDetected = 0;
+        } elsif ($line =~ m!^\s*}$!) {
+            # "}" detected, we are not in an interface anymore
+            $isInInterface = 0;
         } elsif ($line =~ /^(\s*)public (\w+)\(/) {
-            # Constructor
+            # Constructor detected
             my $indent = $1;
             my $name = $2;
             my $rest = $';
@@ -336,6 +204,148 @@ sub analyseFile {
             }
 
             $javadocDetected = 0;
+        } elsif ($line =~ /^(\s*)(public )?(static )?(final )?(abstract )?(\w+(<[^>]*>)?(\[\])?) (\w+)/) {
+            my $indent = $1;
+            my $public = $2;
+            my $type = $6;
+            my $name = $9;
+            my $rest = $';
+
+            if($public || $isInInterface) {
+                if($javadocDetected == 0) {
+                    $nbOfJavaDocAdded++;
+
+                    print "$indent/**\n";
+
+                    if ($type eq "enum") {
+                        # Enums
+                        print "$indent * JBG: Documentation for enum $name\n";
+                    }
+                    elsif ($type eq "class") {
+                        # Classes
+                        print "$indent * JBG: Documentation for class $name\n";
+
+                        if($rest && $rest =~ /^<([^>]+)>/) {
+                            my $hasParam = 0;
+
+                            # TODO Handle param with ','
+                            my @elements = split(/\s*\,\s*/, $1);
+
+                            for (@elements) {
+                                my @words = split(/\s+/, $_);
+
+                                my $p = $words[0];
+
+                                if($hasParam == 0) {
+                                    $hasParam = 1;
+                                    print "$indent *\n";
+                                }
+
+                                print "$indent * \@param <$p>\n";
+                            }
+                        }
+                    } elsif ($type eq "interface") {
+                        # Interface
+                        print "$indent * JBG: Documentation for interface $name\n";
+                        $isInInterface = 1;
+                    } elsif ($type ne "void" && $name =~ /get(\w+)/ && $rest eq "() {") {
+                        # Getters
+                        my $param = &toParam($1);
+                        print "$indent * Getter for $param\n";
+                        print "$indent *\n";
+                        print "$indent * \@return value of $param\n";
+                    } elsif ($type eq "void" && $name =~ /set(\w+)/ && $rest =~ /^\([^,\)]+\) {$/) {
+                        # Setters
+                        # Match again to get the correct $1
+                        $name =~ /set(\w+)/;
+                        my $param = &toParam($1);
+                        print "$indent * Setter for $param\n";
+                        print "$indent *\n";
+                        print "$indent * \@param $param the new value for $param\n";
+                    } else {
+                        my $phrase = &getPhraseFromName($name);
+                        print "$indent * $phrase\n";
+
+                        my $hasParam = 0;
+
+                        # Get all the params
+                        if($rest && $rest =~ /\(/) {
+                            # Method detected, parse the parameters
+                            my $paramsList = $rest;
+
+                            # Use while
+                            while($paramsList !~ /\)/) {
+                                my $line2 = <$INPUT>;
+                                chomp($line2);
+
+                                $line .= "\n" . $line2;
+
+                                $paramsList .= $line2 if ($line2);
+                            }
+
+                            # Extract the params
+                            if($paramsList =~ /^\(([^\)]+)\)/) {
+                                my $listWithoutParenthesis = $1;
+
+                                my @elements = split(/\s*\,\s*/, $listWithoutParenthesis);
+
+                                # Compute biggest parameter name length
+                                my $biggestParameterLength = 0;
+
+                                for (@elements) {
+                                    my @words = split(/\s+/, $_);
+
+                                    my $parameterName = $words[-1];
+
+                                    $biggestParameterLength = max($biggestParameterLength, length($parameterName));
+                                }
+
+                                $biggestParameterLength++;
+
+                                # Write parameters
+                                for (@elements) {
+                                    my @words = split(/\s+/, $_);
+
+                                    my $parameterName = $words[-1];
+
+                                    if($parameterName !~ /[<>]/) {
+                                        my $parameterType = $words[-2];
+
+                                        if($hasParam == 0) {
+                                            $hasParam = 1;
+                                            print "$indent *\n";
+                                        }
+
+                                        print "$indent * \@param $parameterName";
+
+                                        if ($parameterType) {
+                                            $parameterTypes{$parameterType} = 1;
+                                        }
+
+                                        if ($parameterType && $defaultComment{$parameterType}) {
+                                            print " " x ($biggestParameterLength - length($parameterName)) . $defaultComment{$parameterType};
+                                        }
+
+                                        print "\n";
+                                    }
+                                }
+                            }
+                        }
+
+                        if($type ne "void" && $rest =~ /^\(/) {
+                            if($hasParam == 0) {
+                                print "$indent *\n";
+                            }
+
+                            print "$indent * \@return $type\n";
+                        }
+                    }
+
+                    print "$indent */\n";
+                }
+
+                $javadocDetected = 0;
+            }
         } elsif ($line =~ /^\s*$/) {
             # Empty line
 
