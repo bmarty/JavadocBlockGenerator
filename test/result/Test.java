@@ -271,6 +271,26 @@ public class Test {
 
     }
 
+    // final method
+
+    /**
+     * Final method
+     */
+    public final void finalMethod() {
+
+    }
+
+    // final paramter
+
+    /**
+     * Final param
+     *
+     * @param finalParam
+     */
+    public void finalParam(final String finalParam) {
+
+    }
+
     // Annotation
 
     /**
@@ -933,4 +953,4 @@ public class InterfaceImplementation implements Action1<Void> {
 
     }
 }
-// Done! 76 javadoc block(s) added to 1 file(s)
+// Done! 78 javadoc block(s) added to 1 file(s)

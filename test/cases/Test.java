@@ -180,6 +180,18 @@ public class Test {
 
     }
 
+    // final method
+
+    public final void finalMethod() {
+
+    }
+
+    // final paramter
+
+    public void finalParam(final String finalParam) {
+
+    }
+
     // Annotation
 
     @Nullable
