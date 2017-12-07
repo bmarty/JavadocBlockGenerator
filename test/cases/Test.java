@@ -378,6 +378,25 @@ public class Test {
         // API not documented
 
         void onAction();
+
+        // API documented, parameters on two lines
+
+        /**
+         * documentation
+         *
+         * @param param1
+         * @param param2
+         */
+        void documented(String param1,
+                        String param2);
+
+        // Complex return type
+
+        Observable<Response<WSAddBankResult>> addBankConnection();
+
+        // Complex parameter
+
+        void getBankConnection(@Path("connectionId") final int connectionId);
     }
 }
 

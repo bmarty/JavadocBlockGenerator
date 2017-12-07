@@ -18,3 +18,5 @@ fi
 rm $tmp_file
 
 # TODO try to compile/indent result/Test.java?
+
+# TODO Run again script on generated file, result must be iso (test script convergence)

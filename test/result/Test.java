@@ -616,6 +616,35 @@ public class Test {
          * On action
          */
         void onAction();
+
+        // API documented, parameters on two lines
+
+        /**
+         * documentation
+         *
+         * @param param1
+         * @param param2
+         */
+        void documented(String param1,
+                        String param2);
+
+        // Complex return type
+
+        /**
+         * Add bank connection
+         *
+         * @return Observable<Response<WSAddBankResult>>
+         */
+        Observable<Response<WSAddBankResult>> addBankConnection();
+
+        // Complex parameter
+
+        /**
+         * Get bank connection
+         *
+         * @param connectionId
+         */
+        void getBankConnection(@Path("connectionId") final int connectionId);
     }
 }
 
