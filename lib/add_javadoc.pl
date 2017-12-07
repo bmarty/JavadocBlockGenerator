@@ -118,8 +118,9 @@ sub analyseFile {
         $skip = 0;
 
         if ($line =~ m!^\s*//!) {
-            # Commented out line
+            # Commented out line, ignore
         } elsif ($line =~ m!/\*\*!) {
+            # "/**" detected
             $javadocDetected = 1;
         } elsif ($line =~ m!^\s*@!) {
             # Annotation detected
@@ -342,10 +343,13 @@ sub analyseFile {
                     }
 
                     print "$indent */\n";
+                } elsif ($type eq "interface") {
+                    # Interface start
+                    $isInInterface = 1;
                 }
-
-                $javadocDetected = 0;
             }
+
+            $javadocDetected = 0;
         } elsif ($line =~ /^\s*$/) {
             # Empty line
 
