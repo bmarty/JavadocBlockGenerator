@@ -367,6 +367,18 @@ public class Test {
         Object onDoSomethingElse(@NonNull Object one,
                                  String two);
     }
+
+    // Already documented interface, but API not documented
+
+    /**
+     * Existing doc
+     */
+    public interface MyInnerInterfaceSpecial {
+
+        // API not documented
+
+        void onAction();
+    }
 }
 
 // documented class
