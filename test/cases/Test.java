@@ -77,6 +77,18 @@ public class Test {
 
     }
 
+    // synchronized
+
+    public synchronized void testPublicSynchro() {
+
+    }
+
+    // static
+
+    public static void testPublicStatic() {
+
+    }
+
     // Documented public
 
     /**
@@ -150,6 +162,12 @@ public class Test {
 
     }
 
+    // Wrong getter name
+
+    public Object forgetThing() {
+        return null;
+    }
+
     // Setter
 
     public void setData(String data) {
@@ -177,6 +195,12 @@ public class Test {
     // Wrong setter 3 bad name
 
     public void set(String data) {
+
+    }
+
+    // Wrong setter (bad name)
+
+    public void resetData(String data) {
 
     }
 

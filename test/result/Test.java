@@ -99,6 +99,24 @@ public class Test {
 
     }
 
+    // synchronized
+
+    /**
+     * Test public synchro
+     */
+    public synchronized void testPublicSynchro() {
+
+    }
+
+    // static
+
+    /**
+     * Test public static
+     */
+    public static void testPublicStatic() {
+
+    }
+
     // Documented public
 
     /**
@@ -216,6 +234,17 @@ public class Test {
 
     }
 
+    // Wrong getter name
+
+    /**
+     * Forget thing
+     *
+     * @return Object
+     */
+    public Object forgetThing() {
+        return null;
+    }
+
     // Setter
 
     /**
@@ -268,6 +297,17 @@ public class Test {
      * @param data
      */
     public void set(String data) {
+
+    }
+
+    // Wrong setter (bad name)
+
+    /**
+     * Reset data
+     *
+     * @param data
+     */
+    public void resetData(String data) {
 
     }
 

@@ -205,11 +205,11 @@ sub analyseFile {
             }
 
             $javadocDetected = 0;
-        } elsif ($line =~ /^(\s*)(public )?(static )?(final )?(abstract )?(\w+(<[^>]*>)?(\[\])?) (\w+)/) {
+        } elsif ($line =~ /^(\s*)(public )?(abstract )?(static )?(final )?(transient )?(volatile )?(synchronized )?(native )?(strictfp )?(\w+(<[^>]*>)?(\[\])?) (\w+)/) {
             my $indent = $1;
             my $public = $2;
-            my $type = $6;
-            my $name = $9;
+            my $type = $11;
+            my $name = $14;
             my $rest = $';
 
             if($public || $isInInterface) {
@@ -249,16 +249,16 @@ sub analyseFile {
                         # Interface
                         print "$indent * JBG: Documentation for interface $name\n";
                         $isInInterface = 1;
-                    } elsif ($type ne "void" && $name =~ /get(\w+)/ && $rest eq "() {") {
+                    } elsif ($type ne "void" && $name =~ /^get(\w+)/ && $rest eq "() {") {
                         # Getters
                         my $param = &toParam($1);
                         print "$indent * Getter for $param\n";
                         print "$indent *\n";
                         print "$indent * \@return value of $param\n";
-                    } elsif ($type eq "void" && $name =~ /set(\w+)/ && $rest =~ /^\([^,\)]+\) {$/) {
+                    } elsif ($type eq "void" && $name =~ /^set(\w+)/ && $rest =~ /^\([^,\)]+\) {$/) {
                         # Setters
                         # Match again to get the correct $1
-                        $name =~ /set(\w+)/;
+                        $name =~ /^set(\w+)/;
                         my $param = &toParam($1);
                         print "$indent * Setter for $param\n";
                         print "$indent *\n";
