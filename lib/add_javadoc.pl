@@ -81,6 +81,73 @@ sub getPhraseFromName {
     return "JBG: Missing documentation for $name";
 }
 
+sub parseParam() {
+    my ($INPUT, $indent, $rest) = @_;
+
+    my $append = "";
+
+    my $hasParam = 0;
+
+    # Get all the params
+    my $paramsList = $rest;
+
+    # Use while
+    while($paramsList !~ /\)/) {
+        my $line2 = <$INPUT>;
+        chomp($line2);
+
+        $append .= "\n" . $line2;
+
+        $paramsList .= $line2 if ($line2);
+    }
+
+    # Extract the params
+    if($paramsList =~ /^([^\)]+)\)/) {
+        my $listWithoutParenthesis = $1;
+
+        my @elements = split(/\s*\,\s*/, $listWithoutParenthesis);
+
+        # Compute biggest parameter name length
+        my $biggestParameterLength = 0;
+
+        for (@elements) {
+            my @words = split(/\s+/, $_);
+
+            my $parameterName = $words[-1];
+
+            $biggestParameterLength = max($biggestParameterLength, length($parameterName));
+        }
+
+        $biggestParameterLength++;
+
+        # Write parameters
+        for (@elements) {
+            my @words = split(/\s+/, $_);
+
+            my $parameterName = $words[-1];
+
+            if($parameterName !~ /[<>]/) {
+                my $parameterType = $words[-2];
+
+                if($hasParam == 0) {
+                    $hasParam = 1;
+                    print "$indent *\n";
+                }
+
+                print "$indent * \@param $parameterName";
+
+                if ($parameterType && $defaultComment{$parameterType}) {
+                    print " " x ($biggestParameterLength - length($parameterName)) . $defaultComment{$parameterType};
+                }
+
+                print "\n";
+            }
+        }
+    }
+
+    return $append;
+}
+
 sub analyseFile {
     my $file = $_;
 
@@ -142,64 +209,7 @@ sub analyseFile {
 
                 print "$indent * Constructor for class $name\n";
 
-                my $hasParam = 0;
-
-                # Get all the params
-                my $paramsList = $rest;
-
-                # Use while
-                while($paramsList !~ /\)/) {
-                    my $line2 = <$INPUT>;
-                    chomp($line2);
-
-                    $line .= "\n" . $line2;
-
-                    $paramsList .= $line2 if ($line2);
-                }
-
-                # Extract the params
-                if($paramsList =~ /^([^\)]+)\)/) {
-                    my $listWithoutParenthesis = $1;
-
-                    my @elements = split(/\s*\,\s*/, $listWithoutParenthesis);
-
-                    # Compute biggest parameter name length
-                    my $biggestParameterLength = 0;
-
-                    for (@elements) {
-                        my @words = split(/\s+/, $_);
-
-                        my $parameterName = $words[-1];
-
-                        $biggestParameterLength = max($biggestParameterLength, length($parameterName));
-                    }
-
-                    $biggestParameterLength++;
-
-                    # Write parameters
-                    for (@elements) {
-                        my @words = split(/\s+/, $_);
-
-                        my $parameterName = $words[-1];
-
-                        if($parameterName !~ /[<>]/) {
-                            my $parameterType = $words[-2];
-
-                            if($hasParam == 0) {
-                                $hasParam = 1;
-                                print "$indent *\n";
-                            }
-
-                            print "$indent * \@param $parameterName";
-
-                            if ($parameterType && $defaultComment{$parameterType}) {
-                                print " " x ($biggestParameterLength - length($parameterName)) . $defaultComment{$parameterType};
-                            }
-
-                            print "\n";
-                        }
-                    }
-                }
+                $line .= &parseParam($INPUT, $indent, $rest);
 
                 print "$indent */\n";
             }
