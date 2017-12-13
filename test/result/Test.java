@@ -714,6 +714,21 @@ public class Test {
          * @param connectionId
          */
         void getBankConnection(@Path("connectionId") final int connectionId);
+
+        // Complex parammeters multiline
+
+        /**
+         * Get other bank connection
+         *
+         * @param connectionId
+         * @param connectionId2
+         * @param connectionId3
+         */
+        void getOtherBankConnection(@Path("connectionId") final int connectionId,
+                                    @Path("connectionId") final int connectionId2,
+                                    @Path("connectionId") final int connectionId3) {
+
+        }
     }
 }
 
@@ -1002,4 +1017,4 @@ public class InterfaceImplementation implements Action1<Void> {
 
     }
 }
-// Done! 80 javadoc block(s) added to 1 file(s)
+// Done! 84 javadoc block(s) added to 1 file(s)

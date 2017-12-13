@@ -92,17 +92,24 @@ sub parseParam() {
     my $paramsList = $rest;
 
     # Use while
-    while($paramsList !~ /\)/) {
+    # We need as many '(' than ')'
+    my $countOpenParenthesis = ($paramsList =~ tr/\(//);
+    my $countCloseParenthesis = ($paramsList =~ tr/\)//);
+
+    while($countOpenParenthesis != $countCloseParenthesis) {
         my $line2 = <$INPUT>;
         chomp($line2);
 
         $append .= "\n" . $line2;
 
         $paramsList .= $line2 if ($line2);
+
+        $countOpenParenthesis = ($paramsList =~ tr/\(//);
+        $countCloseParenthesis = ($paramsList =~ tr/\)//);
     }
 
     # Extract the params
-    if($paramsList =~ /^\(([^\)]+)\)/) {
+    if($paramsList =~ /^\((.+)\)/) {
         my $listWithoutParenthesis = $1;
 
         my @elements = split(/\s*\,\s*/, $listWithoutParenthesis);

@@ -437,6 +437,14 @@ public class Test {
         // Complex parameter
 
         void getBankConnection(@Path("connectionId") final int connectionId);
+
+        // Complex parammeters multiline
+
+        void getOtherBankConnection(@Path("connectionId") final int connectionId,
+                                    @Path("connectionId") final int connectionId2,
+                                    @Path("connectionId") final int connectionId3) {
+
+        }
     }
 }
 
