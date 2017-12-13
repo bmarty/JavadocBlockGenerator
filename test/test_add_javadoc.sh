@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
 tmp_file="___tmp.java"
+tmp_file2="___tmp2.java"
 
 ../lib/add_javadoc.pl ./cases/ > $tmp_file
 
@@ -18,15 +19,20 @@ fi
 
 # TODO try to compile/indent result/Test.java?
 
-# Run again script on generated file, result must be iso (test script convergence)
+# Run again script on generated file, result must be iso (test the script convergence)
 
 ../lib/add_javadoc.pl ./result/ > $tmp_file
 
-diff $tmp_file ./result/Test.java
+
+cp ./result/Test.java $tmp_file2
+echo "// Done! No file modified." >> $tmp_file2
+
+diff $tmp_file $tmp_file2
 
 result2=$?
 
 rm $tmp_file
+rm $tmp_file2
 
 if [ $result2 -ne 0 ]; then
     echo "Error: result is not stable."
