@@ -5,6 +5,8 @@ use strict;
 use File::Find;
 use List::Util qw[min max];
 
+my $log = 1;
+
 my $usage = "Usage: $0 [-write] ROOT_PATH...\n";
 
 my $root = shift or die $usage;
@@ -108,9 +110,13 @@ sub parseParam() {
         $countCloseParenthesis = ($paramsList =~ tr/\)//);
     }
 
+    print STDERR "Parameters list: " . $paramsList . "\n" if($log);
+
     # Extract the params
     if($paramsList =~ /^\((.+)\)/) {
         my $listWithoutParenthesis = $1;
+
+        print STDERR "Without parenthesis: " . $listWithoutParenthesis . "\n" if($log);
 
         my @elements = split(/\s*\,\s*/, $listWithoutParenthesis);
 
@@ -118,6 +124,8 @@ sub parseParam() {
         my $biggestParameterLength = 0;
 
         for (@elements) {
+            print STDERR "Element: " . $_ . "\n" if($log);
+
             my @words = split(/\s+/, $_);
 
             my $parameterName = $words[-1];
@@ -129,6 +137,8 @@ sub parseParam() {
 
         # Write parameters
         for (@elements) {
+            print STDERR "Element: " . $_ . "\n" if($log);
+
             my @words = split(/\s+/, $_);
 
             my $parameterName = $words[-1];
@@ -189,22 +199,31 @@ sub analyseFile {
 
         my $line = $_;
 
+        print STDERR "Line: " . $line . "\n" if($log);
+
         $skip = 0;
 
         if ($line =~ m!^\s*//!) {
             # Commented out line, ignore
+            print STDERR "  Commented out line, ignore\n" if($log);
         } elsif ($line =~ m!/\*\*!) {
             # "/**" detected
+            print STDERR "  Javadoc detected\n" if($log);
             $javadocDetected = 1;
         } elsif ($line =~ m!^\s*@!) {
             # Annotation detected
+            print STDERR "  Annotation detected\n" if($log);
             $block .= $line . "\n";
             $skip = 1;
         } elsif ($line =~ m!^\s*}$!) {
             # "}" detected, we are not in an interface anymore
-            $isInInterface = 0;
+            if ($isInInterface) {
+                print STDERR "  '}' detected, we are not in an interface anymore\n" if($log);
+                $isInInterface = 0;
+            }
         } elsif ($line =~ /^(\s*)public (\w+)\(/) {
             # Constructor detected
+            print STDERR "  Constructor detected\n" if($log);
             my $indent = $1;
             my $name = $2;
             my $rest = $';
@@ -236,8 +255,11 @@ sub analyseFile {
             my $generatedJavadoc = "";
 
             if($public || $isInInterface) {
+                print STDERR "  Method or class member detected\n" if($log);
+
                 if ($type eq "interface") {
                     # Interface start
+                    print STDERR "    (Interface start)\n" if($log);
                     $isInInterface = 1;
                 }
 
@@ -245,10 +267,12 @@ sub analyseFile {
 
                 if ($type eq "enum") {
                     # Enums
+                    print STDERR "    enum " . $name . "\n" if($log);
                     $generatedJavadoc .= "$indent * JBG: Documentation for enum $name\n";
                 }
                 elsif ($type eq "class") {
                     # Classes
+                    print STDERR "    class " . $name . "\n" if($log);
                     $generatedJavadoc .= "$indent * JBG: Documentation for class $name\n";
 
                     if($rest && $rest =~ /^<([^>]+)>/) {
@@ -272,15 +296,18 @@ sub analyseFile {
                     }
                 } elsif ($type eq "interface") {
                     # Interface
+                    print STDERR "    interface " . $name . "\n" if($log);
                     $generatedJavadoc .= "$indent * JBG: Documentation for interface $name\n";
                 } elsif ($type ne "void" && $name =~ /^get(\w+)/ && $rest eq "() {") {
                     # Getters
+                    print STDERR "    getter " . $name . "\n" if($log);
                     my $param = &toParam($1);
                     $generatedJavadoc .= "$indent * Getter for $param\n";
                     $generatedJavadoc .= "$indent *\n";
                     $generatedJavadoc .= "$indent * \@return value of $param\n";
                 } elsif ($type eq "void" && $name =~ /^set(\w+)/ && $rest =~ /^\([^,\)]+\) {$/) {
                     # Setters
+                    print STDERR "    setter " . $name . "\n" if($log);
                     # Match again to get the correct $1
                     $name =~ /^set(\w+)/;
                     my $param = &toParam($1);
@@ -288,6 +315,8 @@ sub analyseFile {
                     $generatedJavadoc .= "$indent *\n";
                     $generatedJavadoc .= "$indent * \@param $param the new value for $param\n";
                 } else {
+                    # Other cases
+                    print STDERR "    other " . $name . "\n" if($log);
                     my $phrase = &getPhraseFromName($name);
                     $generatedJavadoc .= "$indent * $phrase\n";
 
@@ -319,6 +348,7 @@ sub analyseFile {
             $javadocDetected = 0;
         } elsif ($line =~ /^\s*$/) {
             # Empty line
+            print STDERR "  Empty line\n" if($log);
 
             $javadocDetected = 0;
         }
