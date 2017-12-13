@@ -1017,4 +1017,4 @@ public class InterfaceImplementation implements Action1<Void> {
 
     }
 }
-// Done! 84 javadoc block(s) added to 1 file(s)
+// Done! 86 javadoc block(s) added to 1 file(s)

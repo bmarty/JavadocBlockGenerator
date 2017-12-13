@@ -239,12 +239,12 @@ sub analyseFile {
             }
 
             $javadocDetected = 0;
-        } elsif ($line =~ /^(\s*)(public )?(abstract )?(static )?(final )?(transient )?(volatile )?(synchronized )?(native )?(strictfp )?(\w+(<[^>]*>)?(\[\])?) (\w+)/) {
+        } elsif ($line =~ /^(\s*)(public )?(abstract )?(static )?(final )?(transient )?(volatile )?(synchronized )?(native )?(strictfp )?(\w+(<(([^>]|\w+|\w+<[\w ,]*>)(, )?)*>)?(\[\])?) (\w+)/) {
             # Method or class member detected
             my $indent = $1;
             my $public = $2;
             my $type = $11;
-            my $name = $14;
+            my $name = $17;
             my $rest = $';
 
             my $generatedJavadoc = "";
