@@ -102,7 +102,7 @@ sub parseParam() {
 
         $append .= "\n" . $line2;
 
-        $paramsList .= $line2 if ($line2);
+        $paramsList .= $line2;
 
         $countOpenParenthesis = ($paramsList =~ tr/\(//);
         $countCloseParenthesis = ($paramsList =~ tr/\)//);
