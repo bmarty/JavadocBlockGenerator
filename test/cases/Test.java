@@ -430,6 +430,10 @@ public class Test {
 
         Observable<Response<WSAddBankResult>> addBankConnection();
 
+        // Complex return type 2
+
+        Observable<Response<WSAddBankResult, Void>> addBankConnection();
+
         // Complex parameter
 
         void getBankConnection(@Path("connectionId") final int connectionId);

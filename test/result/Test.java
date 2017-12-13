@@ -697,6 +697,15 @@ public class Test {
          */
         Observable<Response<WSAddBankResult>> addBankConnection();
 
+        // Complex return type 2
+
+        /**
+         * Add bank connection
+         *
+         * @return Observable<Response<WSAddBankResult, Void>>
+         */
+        Observable<Response<WSAddBankResult, Void>> addBankConnection();
+
         // Complex parameter
 
         /**
@@ -993,4 +1002,4 @@ public class InterfaceImplementation implements Action1<Void> {
 
     }
 }
-// Done! 78 javadoc block(s) added to 1 file(s)
+// Done! 80 javadoc block(s) added to 1 file(s)
