@@ -28,16 +28,11 @@ my %defaultComment =
 my $countFile = 0;
 my $countBlock = 0;
 
-my %parameterTypes = ();
-
 while ($root) {
     find( \&analyseFile, $root );
 
     $root = shift;
 }
-
-# Uncomment to get a list of types for parameters
-# print STDERR "$_\n" for sort keys(%parameterTypes);
 
 select STDOUT;
 
