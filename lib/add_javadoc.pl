@@ -85,7 +85,6 @@ sub parseParam() {
     my ($INPUT, $indent, $rest) = @_;
 
     my $append = "";
-
     my $hasParam = 0;
 
     # Get all the params
@@ -102,7 +101,7 @@ sub parseParam() {
     }
 
     # Extract the params
-    if($paramsList =~ /^([^\)]+)\)/) {
+    if($paramsList =~ /^\(([^\)]+)\)/) {
         my $listWithoutParenthesis = $1;
 
         my @elements = split(/\s*\,\s*/, $listWithoutParenthesis);
@@ -145,7 +144,7 @@ sub parseParam() {
         }
     }
 
-    return $append;
+    return ($append, $hasParam);
 }
 
 sub analyseFile {
@@ -209,7 +208,8 @@ sub analyseFile {
 
                 print "$indent * Constructor for class $name\n";
 
-                $line .= &parseParam($INPUT, $indent, $rest);
+                my($append, $hasParam) = &parseParam($INPUT, $indent, "(" . $rest);
+                $line .= $append;
 
                 print "$indent */\n";
             }
@@ -278,78 +278,18 @@ sub analyseFile {
                         my $phrase = &getPhraseFromName($name);
                         print "$indent * $phrase\n";
 
-                        my $hasParam = 0;
-
-                        # Get all the params
                         if($rest && $rest =~ /\(/) {
                             # Method detected, parse the parameters
-                            my $paramsList = $rest;
+                            my($append, $hasParam) = &parseParam($INPUT, $indent, $rest);
+                            $line .= $append;
 
-                            # Use while
-                            while($paramsList !~ /\)/) {
-                                my $line2 = <$INPUT>;
-                                chomp($line2);
-
-                                $line .= "\n" . $line2;
-
-                                $paramsList .= $line2 if ($line2);
-                            }
-
-                            # Extract the params
-                            if($paramsList =~ /^\(([^\)]+)\)/) {
-                                my $listWithoutParenthesis = $1;
-
-                                my @elements = split(/\s*\,\s*/, $listWithoutParenthesis);
-
-                                # Compute biggest parameter name length
-                                my $biggestParameterLength = 0;
-
-                                for (@elements) {
-                                    my @words = split(/\s+/, $_);
-
-                                    my $parameterName = $words[-1];
-
-                                    $biggestParameterLength = max($biggestParameterLength, length($parameterName));
+                            if($type ne "void" && $rest =~ /^\(/) {
+                                if($hasParam == 0) {
+                                    print "$indent *\n";
                                 }
 
-                                $biggestParameterLength++;
-
-                                # Write parameters
-                                for (@elements) {
-                                    my @words = split(/\s+/, $_);
-
-                                    my $parameterName = $words[-1];
-
-                                    if($parameterName !~ /[<>]/) {
-                                        my $parameterType = $words[-2];
-
-                                        if($hasParam == 0) {
-                                            $hasParam = 1;
-                                            print "$indent *\n";
-                                        }
-
-                                        print "$indent * \@param $parameterName";
-
-                                        if ($parameterType) {
-                                            $parameterTypes{$parameterType} = 1;
-                                        }
-
-                                        if ($parameterType && $defaultComment{$parameterType}) {
-                                            print " " x ($biggestParameterLength - length($parameterName)) . $defaultComment{$parameterType};
-                                        }
-
-                                        print "\n";
-                                    }
-                                }
+                                print "$indent * \@return $type\n";
                             }
-                        }
-
-                        if($type ne "void" && $rest =~ /^\(/) {
-                            if($hasParam == 0) {
-                                print "$indent *\n";
-                            }
-
-                            print "$indent * \@return $type\n";
                         }
                     }
 
