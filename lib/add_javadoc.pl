@@ -5,7 +5,7 @@ use strict;
 use File::Find;
 use List::Util qw[min max];
 
-my $log = 1;
+my $log = 0;
 
 my $usage = "Usage: $0 [-write] ROOT_PATH...\n";
 
