@@ -86,6 +86,7 @@ sub parseParam() {
 
     my $append = "";
     my $hasParam = 0;
+    my $generatedJavadoc = "";
 
     # Get all the params
     my $paramsList = $rest;
@@ -130,21 +131,21 @@ sub parseParam() {
 
                 if($hasParam == 0) {
                     $hasParam = 1;
-                    print "$indent *\n";
+                    $generatedJavadoc .= "$indent *\n";
                 }
 
-                print "$indent * \@param $parameterName";
+                $generatedJavadoc .= "$indent * \@param $parameterName";
 
                 if ($parameterType && $defaultComment{$parameterType}) {
-                    print " " x ($biggestParameterLength - length($parameterName)) . $defaultComment{$parameterType};
+                    $generatedJavadoc .= " " x ($biggestParameterLength - length($parameterName)) . $defaultComment{$parameterType};
                 }
 
-                print "\n";
+                $generatedJavadoc .= "\n";
             }
         }
     }
 
-    return ($append, $hasParam);
+    return ($append, $hasParam, $generatedJavadoc);
 }
 
 sub analyseFile {
@@ -208,8 +209,10 @@ sub analyseFile {
 
                 print "$indent * Constructor for class $name\n";
 
-                my($append, $hasParam) = &parseParam($INPUT, $indent, "(" . $rest);
+                my($append, $hasParam, $generatedJavadoc) = &parseParam($INPUT, $indent, "(" . $rest);
                 $line .= $append;
+
+                print $generatedJavadoc;
 
                 print "$indent */\n";
             }
@@ -223,80 +226,86 @@ sub analyseFile {
             my $name = $14;
             my $rest = $';
 
+            my $generatedJavadoc = "";
+
             if($public || $isInInterface) {
-                if($javadocDetected == 0) {
-                    $nbOfJavaDocAdded++;
-
-                    print "$indent/**\n";
-
-                    if ($type eq "enum") {
-                        # Enums
-                        print "$indent * JBG: Documentation for enum $name\n";
-                    }
-                    elsif ($type eq "class") {
-                        # Classes
-                        print "$indent * JBG: Documentation for class $name\n";
-
-                        if($rest && $rest =~ /^<([^>]+)>/) {
-                            my $hasParam = 0;
-
-                            # TODO Handle param with ','
-                            my @elements = split(/\s*\,\s*/, $1);
-
-                            for (@elements) {
-                                my @words = split(/\s+/, $_);
-
-                                my $p = $words[0];
-
-                                if($hasParam == 0) {
-                                    $hasParam = 1;
-                                    print "$indent *\n";
-                                }
-
-                                print "$indent * \@param <$p>\n";
-                            }
-                        }
-                    } elsif ($type eq "interface") {
-                        # Interface
-                        print "$indent * JBG: Documentation for interface $name\n";
-                        $isInInterface = 1;
-                    } elsif ($type ne "void" && $name =~ /^get(\w+)/ && $rest eq "() {") {
-                        # Getters
-                        my $param = &toParam($1);
-                        print "$indent * Getter for $param\n";
-                        print "$indent *\n";
-                        print "$indent * \@return value of $param\n";
-                    } elsif ($type eq "void" && $name =~ /^set(\w+)/ && $rest =~ /^\([^,\)]+\) {$/) {
-                        # Setters
-                        # Match again to get the correct $1
-                        $name =~ /^set(\w+)/;
-                        my $param = &toParam($1);
-                        print "$indent * Setter for $param\n";
-                        print "$indent *\n";
-                        print "$indent * \@param $param the new value for $param\n";
-                    } else {
-                        my $phrase = &getPhraseFromName($name);
-                        print "$indent * $phrase\n";
-
-                        if($rest && $rest =~ /\(/) {
-                            # Method detected, parse the parameters
-                            my($append, $hasParam) = &parseParam($INPUT, $indent, $rest);
-                            $line .= $append;
-
-                            if($type ne "void" && $rest =~ /^\(/) {
-                                if($hasParam == 0) {
-                                    print "$indent *\n";
-                                }
-
-                                print "$indent * \@return $type\n";
-                            }
-                        }
-                    }
-
-                    print "$indent */\n";
-                } elsif ($type eq "interface") {
+                if ($type eq "interface") {
                     # Interface start
                     $isInInterface = 1;
+                }
+
+                $generatedJavadoc .= "$indent/**\n";
+
+                if ($type eq "enum") {
+                    # Enums
+                    $generatedJavadoc .= "$indent * JBG: Documentation for enum $name\n";
+                }
+                elsif ($type eq "class") {
+                    # Classes
+                    $generatedJavadoc .= "$indent * JBG: Documentation for class $name\n";
+
+                    if($rest && $rest =~ /^<([^>]+)>/) {
+                        my $hasParam = 0;
+
+                        # TODO Handle param with ','
+                        my @elements = split(/\s*\,\s*/, $1);
+
+                        for (@elements) {
+                            my @words = split(/\s+/, $_);
+
+                            my $p = $words[0];
+
+                            if($hasParam == 0) {
+                                $hasParam = 1;
+                                $generatedJavadoc .= "$indent *\n";
+                            }
+
+                            $generatedJavadoc .= "$indent * \@param <$p>\n";
+                        }
+                    }
+                } elsif ($type eq "interface") {
+                    # Interface
+                    $generatedJavadoc .= "$indent * JBG: Documentation for interface $name\n";
+                } elsif ($type ne "void" && $name =~ /^get(\w+)/ && $rest eq "() {") {
+                    # Getters
+                    my $param = &toParam($1);
+                    $generatedJavadoc .= "$indent * Getter for $param\n";
+                    $generatedJavadoc .= "$indent *\n";
+                    $generatedJavadoc .= "$indent * \@return value of $param\n";
+                } elsif ($type eq "void" && $name =~ /^set(\w+)/ && $rest =~ /^\([^,\)]+\) {$/) {
+                    # Setters
+                    # Match again to get the correct $1
+                    $name =~ /^set(\w+)/;
+                    my $param = &toParam($1);
+                    $generatedJavadoc .= "$indent * Setter for $param\n";
+                    $generatedJavadoc .= "$indent *\n";
+                    $generatedJavadoc .= "$indent * \@param $param the new value for $param\n";
+                } else {
+                    my $phrase = &getPhraseFromName($name);
+                    $generatedJavadoc .= "$indent * $phrase\n";
+
+                    if($rest && $rest =~ /\(/) {
+                        # Method detected, parse the parameters
+                        my($append, $hasParam, $generatedJavadocBySub) = &parseParam($INPUT, $indent, $rest, $generatedJavadoc);
+                        $line .= $append;
+
+                        $generatedJavadoc .= $generatedJavadocBySub;
+
+                        if($type ne "void" && $rest =~ /^\(/) {
+                            if($hasParam == 0) {
+                                $generatedJavadoc .= "$indent *\n";
+                            }
+
+                            $generatedJavadoc .= "$indent * \@return $type\n";
+                        }
+                    }
+                }
+
+                $generatedJavadoc .= "$indent */\n";
+
+                if($javadocDetected == 0) {
+                    $nbOfJavaDocAdded++;
+                    print $generatedJavadoc;
                 }
             }
 
