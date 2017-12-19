@@ -293,6 +293,26 @@ sub analyseFile {
                     # Interface
                     print STDERR "    interface " . $name . "\n" if($log);
                     $generatedJavadoc .= "$indent * JBG: Documentation for interface $name\n";
+
+                    if($rest && $rest =~ /^<([^>]+)>/) {
+                        my $hasParam = 0;
+
+                        # TODO Handle param with ','
+                        my @elements = split(/\s*\,\s*/, $1);
+
+                        for (@elements) {
+                            my @words = split(/\s+/, $_);
+
+                            my $p = $words[0];
+
+                            if($hasParam == 0) {
+                                $hasParam = 1;
+                                $generatedJavadoc .= "$indent *\n";
+                            }
+
+                            $generatedJavadoc .= "$indent * \@param <$p>\n";
+                        }
+                    }
                 } elsif ($type ne "void" && $name =~ /^get([A-Z]\w+)/ && $rest eq "() {") {
                     # Getters
                     print STDERR "    getter " . $name . "\n" if($log);

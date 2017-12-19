@@ -544,6 +544,12 @@ public interface MyInterface {
     void onActionDocumented();
 }
 
+// Interface with param
+
+public interface ISave<I> {
+
+}
+
 // Absctract class
 
 public abstract class AbstractClass {

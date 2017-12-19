@@ -859,6 +859,17 @@ public interface MyInterface {
     void onActionDocumented();
 }
 
+// Interface with param
+
+/**
+ * JBG: Documentation for interface ISave
+ *
+ * @param <I>
+ */
+public interface ISave<I> {
+
+}
+
 // Absctract class
 
 /**
