@@ -245,6 +245,17 @@ public class Test {
         return null;
     }
 
+    // Wrong getter name 2
+
+    /**
+     * JBG: Missing documentation for getter
+     *
+     * @return Object
+     */
+    public Object getter() {
+        return null;
+    }
+
     // Setter
 
     /**
@@ -308,6 +319,17 @@ public class Test {
      * @param data
      */
     public void resetData(String data) {
+
+    }
+
+    // Wrong setter (bad name)
+
+    /**
+     * JBG: Missing documentation for setup
+     *
+     * @param backgroundRes
+     */
+    public void setup(int backgroundRes) {
 
     }
 

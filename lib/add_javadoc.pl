@@ -293,14 +293,14 @@ sub analyseFile {
                     # Interface
                     print STDERR "    interface " . $name . "\n" if($log);
                     $generatedJavadoc .= "$indent * JBG: Documentation for interface $name\n";
-                } elsif ($type ne "void" && $name =~ /^get(\w+)/ && $rest eq "() {") {
+                } elsif ($type ne "void" && $name =~ /^get([A-Z]\w+)/ && $rest eq "() {") {
                     # Getters
                     print STDERR "    getter " . $name . "\n" if($log);
                     my $param = &toParam($1);
                     $generatedJavadoc .= "$indent * Getter for $param\n";
                     $generatedJavadoc .= "$indent *\n";
                     $generatedJavadoc .= "$indent * \@return value of $param\n";
-                } elsif ($type eq "void" && $name =~ /^set(\w+)/ && $rest =~ /^\([^,\)]+\) {$/) {
+                } elsif ($type eq "void" && $name =~ /^set([A-Z]\w*)/ && $rest =~ /^\([^,\)]+\) {$/) {
                     # Setters
                     print STDERR "    setter " . $name . "\n" if($log);
                     # Match again to get the correct $1

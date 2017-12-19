@@ -168,6 +168,12 @@ public class Test {
         return null;
     }
 
+    // Wrong getter name 2
+
+    public Object getter() {
+        return null;
+    }
+
     // Setter
 
     public void setData(String data) {
@@ -201,6 +207,12 @@ public class Test {
     // Wrong setter (bad name)
 
     public void resetData(String data) {
+
+    }
+
+    // Wrong setter (bad name)
+
+    public void setup(int backgroundRes) {
 
     }
 
