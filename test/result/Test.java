@@ -752,6 +752,13 @@ public class Test {
 
         }
     }
+
+    /**
+     * JBG: Documentation for annotated interface ScrollDirection
+     */
+    public @interface ScrollDirection {
+
+    }
 }
 
 // documented class

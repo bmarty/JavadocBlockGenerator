@@ -239,7 +239,7 @@ sub analyseFile {
             }
 
             $javadocDetected = 0;
-        } elsif ($line =~ /^(\s*)(public )?(abstract )?(static )?(final )?(transient )?(volatile )?(synchronized )?(native )?(strictfp )?(\w+(<((\w+|\w+<[\w ,]*>)(, )?)*>)?(\[\])?) (\w+)/) {
+        } elsif ($line =~ /^(\s*)(public )?(abstract )?(static )?(final )?(transient )?(volatile )?(synchronized )?(native )?(strictfp )?(@?\w+(<((\w+|\w+<[\w ,]*>)(, )?)*>)?(\[\])?) (\w+)/) {
             # Method or class member detected
             my $indent = $1;
             my $public = $2;
@@ -289,6 +289,10 @@ sub analyseFile {
                             $generatedJavadoc .= "$indent * \@param <$p>\n";
                         }
                     }
+                } elsif ($type eq "\@interface") {
+                    # Interface
+                    print STDERR "    annotated interface " . $name . "\n" if($log);
+                    $generatedJavadoc .= "$indent * JBG: Documentation for annotated interface $name\n";
                 } elsif ($type eq "interface") {
                     # Interface
                     print STDERR "    interface " . $name . "\n" if($log);

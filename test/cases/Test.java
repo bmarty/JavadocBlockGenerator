@@ -458,6 +458,10 @@ public class Test {
 
         }
     }
+
+    public @interface ScrollDirection {
+
+    }
 }
 
 // documented class
